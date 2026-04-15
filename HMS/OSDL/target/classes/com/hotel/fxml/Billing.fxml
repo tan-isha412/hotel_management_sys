@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hotel.controller.BillingController"
+      styleClass="root-pane" spacing="0">
+
+    <!-- Header -->
+    <HBox styleClass="header" alignment="CENTER_LEFT" spacing="16">
+        <padding><Insets top="16" right="28" bottom="16" left="28"/></padding>
+        <Label text="💰" style="-fx-font-size:24px;"/>
+        <VBox spacing="1">
+            <Label text="Billing &amp; Invoices" styleClass="header-title"/>
+            <Label text="View revenue, discounts and generate invoices" styleClass="header-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="🔄 Refresh" styleClass="btn-secondary" onAction="#refresh"/>
+        <Button text="🧾 Generate Invoice" styleClass="btn-accent" onAction="#generateSelectedBill"/>
+    </HBox>
+
+    <!-- Revenue Stats Row -->
+    <HBox styleClass="stats-row" spacing="14" alignment="CENTER">
+        <padding><Insets top="18" right="28" bottom="18" left="28"/></padding>
+
+        <VBox styleClass="stat-card stat-green" alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+            <padding><Insets top="16" right="14" bottom="16" left="14"/></padding>
+            <Label text="💰" style="-fx-font-size:22px;"/>
+            <Label text="Total Revenue" styleClass="stat-label"/>
+            <Label fx:id="lblTotalRevenue" text="₹0" styleClass="stat-number"/>
+        </VBox>
+
+        <VBox styleClass="stat-card stat-orange" alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+            <padding><Insets top="16" right="14" bottom="16" left="14"/></padding>
+            <Label text="🎟️" style="-fx-font-size:22px;"/>
+            <Label text="Total Discounts Given" styleClass="stat-label"/>
+            <Label fx:id="lblTotalDiscount" text="₹0" styleClass="stat-number"/>
+        </VBox>
+
+        <VBox styleClass="stat-card stat-blue" alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+            <padding><Insets top="16" right="14" bottom="16" left="14"/></padding>
+            <Label text="📋" style="-fx-font-size:22px;"/>
+            <Label text="Total Bookings" styleClass="stat-label"/>
+            <Label fx:id="lblTotalBookings" text="0" styleClass="stat-number"/>
+        </VBox>
+
+        <VBox styleClass="stat-card stat-purple" alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+            <padding><Insets top="16" right="14" bottom="16" left="14"/></padding>
+            <Label text="📊" style="-fx-font-size:22px;"/>
+            <Label text="Average Bill" styleClass="stat-label"/>
+            <Label fx:id="lblAvgBill" text="₹0" styleClass="stat-number"/>
+        </VBox>
+
+        <VBox styleClass="stat-card stat-teal" alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+            <padding><Insets top="16" right="14" bottom="16" left="14"/></padding>
+            <Label text="✅" style="-fx-font-size:22px;"/>
+            <Label text="Checked Out" styleClass="stat-label"/>
+            <Label fx:id="lblCheckedOut" text="0" styleClass="stat-number"/>
+        </VBox>
+    </HBox>
+
+    <!-- Search bar -->
+    <HBox styleClass="filter-bar" alignment="CENTER_LEFT" spacing="12">
+        <padding><Insets top="10" right="28" bottom="10" left="28"/></padding>
+        <Label text="Search:" styleClass="filter-label"/>
+        <TextField fx:id="tfSearch" promptText="Search by customer name, booking ID or room..."
+                   styleClass="field-styled" prefWidth="320"/>
+        <Button text="Search" styleClass="btn-primary" onAction="#searchBilling"/>
+        <Button text="Clear" styleClass="btn-secondary" onAction="#clearSearch"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Select a booking row and click Generate Invoice to view details."
+               styleClass="hint-label"/>
+    </HBox>
+
+    <!-- Billing Table -->
+    <TableView fx:id="billingTable" VBox.vgrow="ALWAYS" styleClass="table-styled">
+        <padding><Insets top="0" right="24" bottom="24" left="24"/></padding>
+        <columns>
+            <TableColumn fx:id="colBookingId" text="Booking ID" prefWidth="110"/>
+            <TableColumn fx:id="colCustomer" text="Customer" prefWidth="140"/>
+            <TableColumn fx:id="colRoom" text="Room" prefWidth="70"/>
+            <TableColumn fx:id="colDates" text="Stay Period" prefWidth="200"/>
+            <TableColumn fx:id="colNights" text="Nights" prefWidth="70"/>
+            <TableColumn fx:id="colSubtotal" text="Subtotal" prefWidth="100"/>
+            <TableColumn fx:id="colDiscount" text="Discount" prefWidth="100"/>
+            <TableColumn fx:id="colTotal" text="Total Paid" prefWidth="110"/>
+            <TableColumn fx:id="colPromo" text="Promo" prefWidth="90"/>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="110"/>
+        </columns>
+        <placeholder><Label text="No billing records found." styleClass="placeholder-text"/></placeholder>
+    </TableView>
+</VBox>

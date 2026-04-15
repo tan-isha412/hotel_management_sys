@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hotel.controller.CustomersController"
+      styleClass="root-pane" spacing="0">
+
+    <!-- Header -->
+    <HBox styleClass="header" alignment="CENTER_LEFT" spacing="16">
+        <padding><Insets top="16" right="32" bottom="16" left="32"/></padding>
+        <Button text="← Back" styleClass="btn-back" onAction="#goBack"/>
+        <Label text="👤" style="-fx-font-size:26px;"/>
+        <Label text="Customer Management" styleClass="header-title"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS" spacing="0">
+
+        <!-- Form Panel -->
+        <ScrollPane fitToWidth="true" styleClass="form-scroll" prefWidth="360" minWidth="320">
+            <VBox spacing="16" styleClass="form-panel">
+                <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+                <Label text="Register New Customer" styleClass="section-title"/>
+
+                <VBox spacing="6">
+                    <Label text="Full Name *" styleClass="form-label"/>
+                    <TextField fx:id="tfName" promptText="e.g. Rahul Sharma" styleClass="field-styled"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="Phone Number * (10 digits)" styleClass="form-label"/>
+                    <TextField fx:id="tfPhone" promptText="9876543210" styleClass="field-styled"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="Email Address *" styleClass="form-label"/>
+                    <TextField fx:id="tfEmail" promptText="rahul@email.com" styleClass="field-styled"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="Address" styleClass="form-label"/>
+                    <TextField fx:id="tfAddress" promptText="City, State" styleClass="field-styled"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="ID Proof Type *" styleClass="form-label"/>
+                    <ComboBox fx:id="cbIdProof" maxWidth="Infinity" styleClass="combo-styled"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="ID Number *" styleClass="form-label"/>
+                    <TextField fx:id="tfIdNumber" promptText="XXXX-XXXX-XXXX" styleClass="field-styled"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="Date of Birth" styleClass="form-label"/>
+                    <DatePicker fx:id="dpDOB" maxWidth="Infinity" styleClass="datepicker-styled"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="Nationality" styleClass="form-label"/>
+                    <ComboBox fx:id="cbNationality" maxWidth="Infinity" styleClass="combo-styled"/>
+                </VBox>
+
+                <HBox spacing="10">
+                    <Button text="✅ Register Customer" styleClass="btn-success" onAction="#addCustomer"
+                            maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                    <Button text="Clear" styleClass="btn-secondary" onAction="#clearFormAction"/>
+                </HBox>
+
+                <VBox styleClass="tip-box" spacing="4">
+                    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                    <Label text="💡 Birthday Offer" styleClass="tip-title"/>
+                    <Label text="If the customer's birthday matches today, they'll receive a special offer alert!"
+                           styleClass="tip-text" wrapText="true"/>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+
+        <!-- Separator -->
+        <Separator orientation="VERTICAL"/>
+
+        <!-- Customers Table -->
+        <VBox VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" spacing="0">
+            <HBox styleClass="filter-bar" alignment="CENTER_LEFT" spacing="12">
+                <padding><Insets top="12" right="16" bottom="12" left="16"/></padding>
+                <Label text="Registered Customers" styleClass="section-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblCount" styleClass="count-label"/>
+            </HBox>
+            <TableView fx:id="customersTable" VBox.vgrow="ALWAYS" styleClass="table-styled">
+                <padding><Insets top="0" right="16" bottom="16" left="16"/></padding>
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="90"/>
+                    <TableColumn fx:id="colName" text="Name" prefWidth="150"/>
+                    <TableColumn fx:id="colPhone" text="Phone" prefWidth="110"/>
+                    <TableColumn fx:id="colEmail" text="Email" prefWidth="180"/>
+                    <TableColumn fx:id="colNationality" text="Nationality" prefWidth="100"/>
+                    <TableColumn fx:id="colDOB" text="Date of Birth" prefWidth="110"/>
+                    <TableColumn fx:id="colRegistered" text="Registered On" prefWidth="120"/>
+                </columns>
+                <placeholder><Label text="No customers registered yet." styleClass="placeholder-text"/></placeholder>
+            </TableView>
+        </VBox>
+    </HBox>
+</VBox>

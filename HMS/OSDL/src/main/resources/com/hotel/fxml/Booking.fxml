@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hotel.controller.BookingController"
+      styleClass="root-pane" spacing="0">
+
+    <!-- Header -->
+    <HBox styleClass="header" alignment="CENTER_LEFT" spacing="16">
+        <padding><Insets top="16" right="28" bottom="16" left="28"/></padding>
+        <Label text="📅" style="-fx-font-size:24px;"/>
+        <VBox spacing="1">
+            <Label text="New Booking" styleClass="header-title"/>
+            <Label text="Create a new room reservation" styleClass="header-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label styleClass="page-badge" text="Booking"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS" spacing="0">
+
+        <!-- ===== LEFT: BOOKING FORM ===== -->
+        <ScrollPane fitToWidth="true" prefWidth="430" minWidth="390" styleClass="form-scroll">
+            <VBox spacing="14" styleClass="form-panel">
+                <padding><Insets top="20" right="22" bottom="24" left="22"/></padding>
+
+                <!-- 1. Customer Lookup -->
+                <VBox spacing="8" styleClass="tip-box">
+                    <padding><Insets top="14" right="14" bottom="14" left="14"/></padding>
+                    <Label text="1. Customer Lookup" styleClass="section-title"/>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <TextField fx:id="tfCustomerPhone"
+                                   promptText="Phone number (10 digits)"
+                                   styleClass="field-styled"
+                                   HBox.hgrow="ALWAYS"/>
+
+                        <Button text="Find"
+                                onAction="#lookupCustomer"
+                                styleClass="btn-primary"/>
+                    </HBox>
+                    <Label fx:id="lblCustomerInfo" text="Enter phone number and click Find"
+                           styleClass="info-label" wrapText="true"/>
+                    <Label fx:id="lblBirthdayBadge" text="🎂 Birthday Today! — Free Upgrade or 10% Off!"
+                           styleClass="birthday-badge" visible="false" managed="false"/>
+                </VBox>
+
+                <Separator/>
+
+                <!-- 2. Room Selection -->
+                <Label text="2. Room Selection" styleClass="section-title"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Room Type" styleClass="form-label"/>
+                        <ComboBox fx:id="cbRoomType" maxWidth="Infinity" styleClass="combo-styled"/>
+                    </VBox>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Budget Filter" styleClass="form-label"/>
+                        <ComboBox fx:id="cbBudgetFilter" maxWidth="Infinity" styleClass="combo-styled"/>
+                    </VBox>
+                </HBox>
+                <VBox spacing="4">
+                    <Label text="Available Room" styleClass="form-label"/>
+                    <ComboBox fx:id="cbRoom" maxWidth="Infinity" styleClass="combo-styled"/>
+                </VBox>
+
+                <!-- Smart Recommendation -->
+                <VBox fx:id="recommendBox" spacing="6" styleClass="promo-panel" visible="false" managed="false">
+                    <padding><Insets top="10" right="12" bottom="10" left="12"/></padding>
+                    <Label text="💡 Smart Recommendation" styleClass="tip-title"/>
+                    <Label fx:id="lblRecommendation" text="" styleClass="tip-text" wrapText="true"/>
+                </VBox>
+
+                <Separator/>
+
+                <!-- 3. Stay Details -->
+                <Label text="3. Stay Details" styleClass="section-title"/>
+                <HBox spacing="10">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Check-In Date" styleClass="form-label"/>
+                        <DatePicker fx:id="dpCheckIn" maxWidth="Infinity" styleClass="datepicker-styled"/>
+                    </VBox>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Check-Out Date" styleClass="form-label"/>
+                        <DatePicker fx:id="dpCheckOut" maxWidth="Infinity" styleClass="datepicker-styled"/>
+                    </VBox>
+                </HBox>
+                <Label fx:id="lblDateWarning" text="" style="-fx-text-fill:#f87171; -fx-font-size:11px;"
+                       visible="false" managed="false"/>
+                <VBox spacing="4">
+                    <Label text="Number of Guests" styleClass="form-label"/>
+                    <Spinner fx:id="spGuests" min="1" max="6" initialValue="1"
+                             maxWidth="Infinity" styleClass="spinner-styled"/>
+                </VBox>
+
+                <Separator/>
+
+                <!-- 4. Add-on Services -->
+                <Label text="4. Add-on Services" styleClass="section-title"/>
+                <VBox spacing="8" styleClass="addon-box">
+                    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                    <CheckBox fx:id="cbBreakfast" text="🍳 Extra Breakfast  (₹350/person/night)" styleClass="checkbox-styled"/>
+                    <CheckBox fx:id="cbAirport" text="🚗 Airport Transfer  (₹800 one-time)" styleClass="checkbox-styled"/>
+                    <CheckBox fx:id="cbSpa" text="💆 Spa Service  (₹1,200/night)" styleClass="checkbox-styled"/>
+                </VBox>
+
+                <Separator/>
+
+                <!-- 5. Promo Code -->
+                <Label text="5. Promo Code" styleClass="section-title"/>
+
+                <!-- Available promo codes (inline) -->
+                <VBox spacing="6" styleClass="promo-panel">
+                    <padding><Insets top="10" right="12" bottom="10" left="12"/></padding>
+                    <Label text="Available Promo Codes — click to apply:" styleClass="tip-title"/>
+                    <HBox spacing="6">
+                        <Button text="APRIL10" onAction="#applyPromoAPRIL10"/>
+                        <Button text="SUMMER20" onAction="#applyPromoSUMMER20"/>
+                        <Button text="HOTEL15" onAction="#applyPromoHOTEL15"/>
+                    </HBox>
+                </VBox>
+                <VBox spacing="4">
+                    <Label text="Or enter code manually:" styleClass="form-label"/>
+                    <HBox spacing="8">
+                        <TextField fx:id="tfPromoCode" promptText="e.g. APRIL10"
+                                   styleClass="field-styled promo-field" HBox.hgrow="ALWAYS"/>
+                        <Button text="Apply" onAction="#validatePromoCode"/>
+                        <Button text="Auto" onAction="#autoApplyBestPromo"/>
+                    </HBox>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label fx:id="lblPromoStatus" text="" styleClass="promo-status"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+
+                    </HBox>
+                    <Button text="Confirm Booking"
+                            styleClass="btn-accent btn-large"
+                            onAction="#confirmBooking"
+                            maxWidth="Infinity"/>
+                </VBox>
+
+                <Separator/>
+
+                <!-- 6. Special Requests -->
+                <Label text="6. Special Requests" styleClass="section-title"/>
+                <TextArea fx:id="taSpecialRequests" promptText="e.g. High floor, extra towels, non-smoking..."
+                          prefRowCount="3" styleClass="textarea-styled"/>
+
+                <!-- Confirm Button -->
+
+            </VBox>
+        </ScrollPane>
+
+        <Separator orientation="VERTICAL"/>
+
+        <!-- ===== RIGHT: SUMMARY + TABLE ===== -->
+        <VBox HBox.hgrow="ALWAYS" spacing="0">
+
+            <!-- Live Bill Summary -->
+            <VBox styleClass="summary-panel" spacing="12">
+                <padding><Insets top="18" right="22" bottom="18" left="22"/></padding>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="💰 Live Price Calculation" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="lblNights" text="0 nights" styleClass="nights-badge"/>
+                </HBox>
+                <GridPane hgap="16" vgap="8">
+                    <Label text="Room Charges:" styleClass="summary-key" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="lblRoomCharge" text="₹0.00" styleClass="summary-val" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <Label text="Service Charges:" styleClass="summary-key" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label fx:id="lblServiceCharge" text="₹0.00" styleClass="summary-val" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <Label text="Discount:" styleClass="summary-key" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="lblDiscount" text="-₹0.00" styleClass="summary-discount" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+                </GridPane>
+                <Separator/>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Total Amount:" styleClass="total-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="lblTotal" text="₹0.00" styleClass="total-amount"/>
+                </HBox>
+            </VBox>
+
+            <!-- Table + Payment Overlay -->
+            <StackPane VBox.vgrow="ALWAYS">
+                <VBox spacing="0">
+                    <HBox styleClass="filter-bar" alignment="CENTER_LEFT" spacing="12">
+                        <padding><Insets top="12" right="16" bottom="12" left="16"/></padding>
+                        <Label text="All Bookings" styleClass="section-title"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblBookingCount" text="0 bookings" styleClass="count-label"/>
+                    </HBox>
+                    <TableView fx:id="bookingsTable" VBox.vgrow="ALWAYS" styleClass="table-styled">
+                        <padding><Insets top="0" right="16" bottom="16" left="16"/></padding>
+                        <columns>
+                            <TableColumn fx:id="colBookingId" text="Booking ID" prefWidth="100"/>
+                            <TableColumn fx:id="colCustomer" text="Customer" prefWidth="130"/>
+                            <TableColumn fx:id="colRoom" text="Room / Nights" prefWidth="130"/>
+                            <TableColumn fx:id="colCheckIn" text="Check-In" prefWidth="100"/>
+                            <TableColumn fx:id="colCheckOut" text="Check-Out" prefWidth="100"/>
+                            <TableColumn fx:id="colAmount" text="Amount" prefWidth="110"/>
+                            <TableColumn fx:id="colBStatus" text="Status" prefWidth="110"/>
+                        </columns>
+                        <placeholder><Label text="No bookings yet." styleClass="placeholder-text"/></placeholder>
+                    </TableView>
+                </VBox>
+
+                <!-- Payment processing overlay -->
+                <VBox fx:id="paymentOverlay" styleClass="payment-overlay" alignment="CENTER" spacing="20">
+                    <padding><Insets top="32" right="32" bottom="32" left="32"/></padding>
+                    <Label text="💳 Processing Payment..." styleClass="payment-title"/>
+                    <ProgressBar fx:id="pbPayment" prefWidth="320" prefHeight="12" styleClass="progress-bar"/>
+                    <Label fx:id="lblPaymentStatus" text="Connecting..." styleClass="payment-status" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+            </StackPane>
+        </VBox>
+    </HBox>
+</VBox>

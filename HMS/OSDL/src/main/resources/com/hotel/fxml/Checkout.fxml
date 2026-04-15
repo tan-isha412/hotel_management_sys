@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hotel.controller.CheckoutController"
+      styleClass="root-pane" spacing="0">
+
+    <!-- Header -->
+    <HBox styleClass="header" alignment="CENTER_LEFT" spacing="16">
+        <padding><Insets top="16" right="28" bottom="16" left="28"/></padding>
+        <Label text="🚪" style="-fx-font-size:24px;"/>
+        <VBox spacing="1">
+            <Label text="Checkout &amp; Cancellation" styleClass="header-title"/>
+            <Label text="Process guest checkouts and manage bookings" styleClass="header-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label styleClass="page-badge" text="Checkout"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS" spacing="0">
+
+        <!-- ===== LEFT: LOOKUP + INVOICE PREVIEW ===== -->
+        <ScrollPane fitToWidth="true" prefWidth="400" minWidth="370" styleClass="form-scroll">
+            <VBox spacing="14" styleClass="form-panel">
+                <padding><Insets top="20" right="22" bottom="24" left="22"/></padding>
+
+                <!-- Lookup -->
+                <Label text="Find Booking" styleClass="section-title"/>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <TextField fx:id="tfBookingId" promptText="Booking ID (e.g. BKG00001)"
+                               styleClass="field-styled" HBox.hgrow="ALWAYS"/>
+                    <Button text="Find" styleClass="btn-primary" onAction="#lookupBooking"/>
+                </HBox>
+
+                <Separator/>
+
+                <!-- Invoice Preview Panel -->
+                <VBox fx:id="invoicePreviewBox" spacing="0" styleClass="invoice-panel"
+                      visible="false" managed="false">
+
+                    <!-- Invoice Header -->
+                    <VBox spacing="4" styleClass="invoice-header" alignment="CENTER">
+                        <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                        <Label text="🏨 GRAND AZURE HOTEL" styleClass="invoice-title"/>
+                        <Label text="BILLING INVOICE" style="-fx-text-fill:#94a3b8; -fx-font-size:11px;"/>
+                        <Label fx:id="lblInvoiceId" text="" style="-fx-text-fill:#6b84a0; -fx-font-size:11px;"/>
+                    </VBox>
+
+                    <!-- Invoice Body -->
+                    <VBox spacing="8">
+                        <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+
+                        <!-- Guest info -->
+                        <Label text="GUEST DETAILS" style="-fx-text-fill:#c9a84c; -fx-font-size:10px; -fx-font-weight:bold;"/>
+                        <GridPane hgap="12" vgap="5">
+                            <Label text="Name:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <Label fx:id="lblCustomerName" text="-" styleClass="invoice-row-val" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                            <Label text="Phone:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <Label fx:id="lblCustomerPhone" text="-" styleClass="invoice-row-val" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="65"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+                        </GridPane>
+
+                        <Separator/>
+
+                        <!-- Stay info -->
+                        <Label text="STAY DETAILS" style="-fx-text-fill:#c9a84c; -fx-font-size:10px; -fx-font-weight:bold;"/>
+                        <GridPane hgap="12" vgap="5">
+                            <Label text="Room:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <Label fx:id="lblRoom" text="-" styleClass="invoice-row-val" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                            <Label text="Check-In:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <Label fx:id="lblCheckIn" text="-" styleClass="invoice-row-val" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            <Label text="Check-Out:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                            <Label fx:id="lblCheckOut" text="-" styleClass="invoice-row-val" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                            <Label text="Duration:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                            <Label fx:id="lblDates" text="-" styleClass="invoice-row-val" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="65"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+                        </GridPane>
+
+                        <Separator/>
+
+                        <!-- Charges -->
+                        <Label text="CHARGES" style="-fx-text-fill:#c9a84c; -fx-font-size:10px; -fx-font-weight:bold;"/>
+                        <GridPane hgap="12" vgap="5">
+                            <Label text="Room:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <Label fx:id="lblRoomCharges" text="-" styleClass="invoice-row-val" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                            <Label text="Services:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <Label fx:id="lblServiceCharges" text="-" styleClass="invoice-row-val" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            <Label text="Subtotal:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                            <Label fx:id="lblSubtotal" text="-" styleClass="invoice-row-val" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                            <Label text="Discount:" styleClass="invoice-row-key" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                            <Label fx:id="lblDiscountRow" text="-" styleClass="summary-discount" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="65"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+                        </GridPane>
+
+                        <!-- Total Row -->
+                        <VBox styleClass="invoice-total-row" spacing="4">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label text="TOTAL AMOUNT" styleClass="invoice-total-label"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="lblAmount" text="₹0" styleClass="invoice-total-amount"/>
+                            </HBox>
+                            <Label fx:id="lblStatus" text="Status: —"
+                                   style="-fx-text-fill:#94a3b8; -fx-font-size:11px;"/>
+                        </VBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Placeholder when no booking selected -->
+                <VBox fx:id="noSelectionBox" styleClass="tip-box" spacing="8">
+                    <padding><Insets top="20" right="16" bottom="20" left="16"/></padding>
+                    <Label text="ℹ️ Instructions" styleClass="tip-title"/>
+                    <Label text="1. Click a row in the table to select a booking." styleClass="tip-text" wrapText="true"/>
+                    <Label text="2. Or enter a Booking ID above and click Find." styleClass="tip-text" wrapText="true"/>
+                    <Label text="3. Review the invoice preview, then use the action buttons." styleClass="tip-text" wrapText="true"/>
+                </VBox>
+
+                <Separator/>
+
+                <!-- Action Buttons -->
+                <Label text="Actions" styleClass="section-title"/>
+                <VBox spacing="10">
+                    <Button fx:id="btnViewBill" text="🧾 View Full Invoice" styleClass="btn-primary"
+                            maxWidth="Infinity" onAction="#viewBill" disable="true"/>
+                    <Button fx:id="btnCheckout" text="✅ Process Checkout" styleClass="btn-success"
+                            maxWidth="Infinity" onAction="#checkout" disable="true"/>
+                    <Button fx:id="btnCancel" text="❌ Cancel Booking" styleClass="btn-danger"
+                            maxWidth="Infinity" onAction="#cancelBooking" disable="true"/>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+
+        <Separator orientation="VERTICAL"/>
+
+        <!-- ===== RIGHT: ACTIVE BOOKINGS TABLE ===== -->
+        <VBox HBox.hgrow="ALWAYS" spacing="0">
+            <HBox styleClass="filter-bar" alignment="CENTER_LEFT" spacing="12">
+                <padding><Insets top="12" right="16" bottom="12" left="16"/></padding>
+                <Label text="Active Bookings" styleClass="section-title"/>
+                <Label text="— click a row to select" styleClass="section-subtitle"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblActiveCount" text="0 active" styleClass="count-label"/>
+            </HBox>
+            <TableView fx:id="activeBookingsTable" VBox.vgrow="ALWAYS" styleClass="table-styled">
+                <padding><Insets top="0" right="16" bottom="16" left="16"/></padding>
+                <columns>
+                    <TableColumn fx:id="colBookingId" text="Booking ID" prefWidth="110"/>
+                    <TableColumn fx:id="colCustomer" text="Customer" prefWidth="150"/>
+                    <TableColumn fx:id="colRoom" text="Room" prefWidth="80"/>
+                    <TableColumn fx:id="colCheckIn" text="Check-In" prefWidth="100"/>
+                    <TableColumn fx:id="colCheckOut" text="Check-Out" prefWidth="100"/>
+                    <TableColumn fx:id="colAmount" text="Amount" prefWidth="110"/>
+                    <TableColumn fx:id="colStatus" text="Status" prefWidth="110"/>
+                </columns>
+                <placeholder><Label text="No active bookings found." styleClass="placeholder-text"/></placeholder>
+            </TableView>
+        </VBox>
+    </HBox>
+</VBox>

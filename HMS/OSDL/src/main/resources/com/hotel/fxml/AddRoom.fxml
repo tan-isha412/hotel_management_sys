@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hotel.controller.AddRoomController"
+      styleClass="root-pane" spacing="0">
+
+    <!-- ===== HEADER ===== -->
+    <HBox styleClass="header" alignment="CENTER_LEFT" spacing="16">
+        <padding><Insets top="16" right="32" bottom="16" left="32"/></padding>
+        <Button text="← Back" styleClass="btn-back" onAction="#goBack"/>
+        <Label text="🛏️" style="-fx-font-size:26px;"/>
+        <Label text="Add New Room" styleClass="header-title"/>
+    </HBox>
+
+    <!-- ===== FORM ===== -->
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="form-scroll">
+        <VBox spacing="0">
+            <HBox alignment="TOP_CENTER">
+                <padding><Insets top="32" right="32" bottom="32" left="32"/></padding>
+
+                <VBox styleClass="form-panel" spacing="20" maxWidth="560">
+
+                    <!-- Section: Room Identity -->
+                    <Label text="Room Details" styleClass="section-title"/>
+
+                    <!-- Room Number -->
+                    <VBox spacing="6">
+                        <Label text="Room Number *" styleClass="form-label"/>
+                        <TextField fx:id="tfRoomNumber"
+                                   promptText="e.g. 401"
+                                   styleClass="field-styled"/>
+                        <Label fx:id="lblRoomNumberError"
+                               styleClass="hint-label"
+                               text="" style="-fx-text-fill:#e74c3c;"/>
+                    </VBox>
+
+                    <!-- Room Type -->
+                    <VBox spacing="6">
+                        <Label text="Room Type *" styleClass="form-label"/>
+                        <ComboBox fx:id="cbRoomType"
+                                  styleClass="combo-styled"
+                                  maxWidth="Infinity"
+                                  onAction="#onRoomTypeChanged"/>
+                        <Label fx:id="lblRoomTypeError"
+                               styleClass="hint-label"
+                               text="" style="-fx-text-fill:#e74c3c;"/>
+                    </VBox>
+
+                    <!-- Floor -->
+                    <VBox spacing="6">
+                        <Label text="Floor *" styleClass="form-label"/>
+                        <TextField fx:id="tfFloor"
+                                   promptText="e.g. 4"
+                                   styleClass="field-styled"/>
+                        <Label fx:id="lblFloorError"
+                               styleClass="hint-label"
+                               text="" style="-fx-text-fill:#e74c3c;"/>
+                    </VBox>
+
+                    <!-- Base Price -->
+                    <VBox spacing="6">
+                        <Label text="Base Price per Night (₹) *" styleClass="form-label"/>
+                        <TextField fx:id="tfBasePrice"
+                                   promptText="e.g. 3500"
+                                   styleClass="field-styled"/>
+                        <Label fx:id="lblBasePriceError"
+                               styleClass="hint-label"
+                               text="" style="-fx-text-fill:#e74c3c;"/>
+                    </VBox>
+
+                    <!-- Capacity (pre-filled by type, editable) -->
+                    <VBox spacing="6">
+                        <Label text="Capacity (guests)" styleClass="form-label"/>
+                        <TextField fx:id="tfCapacity"
+                                   promptText="Auto-filled by type"
+                                   styleClass="field-styled"/>
+                        <Label styleClass="hint-label"
+                               text="Leave blank to use default for selected room type."
+                               style="-fx-text-fill:#8899aa;"/>
+                    </VBox>
+
+                    <!-- Luxury: View Type (shown only for Luxury Suite) -->
+                    <VBox fx:id="boxViewType" spacing="6" managed="false" visible="false">
+                        <Label text="View Type (Luxury Suite)" styleClass="form-label"/>
+                        <ComboBox fx:id="cbViewType"
+                                  styleClass="combo-styled"
+                                  maxWidth="Infinity"/>
+                    </VBox>
+
+                    <!-- Amenities note -->
+                    <VBox spacing="6">
+                        <Label text="Amenities" styleClass="form-label"/>
+                        <Label fx:id="lblAmenitiesPreview"
+                               text="Select a room type to see included amenities."
+                               styleClass="hint-label"
+                               wrapText="true"
+                               style="-fx-text-fill:#8899aa;"/>
+                    </VBox>
+
+                    <!-- Separator -->
+                    <Separator/>
+
+                    <!-- Buttons -->
+                    <HBox spacing="12" alignment="CENTER_RIGHT">
+                        <Button text="Clear Form" styleClass="btn-secondary" onAction="#clearForm"/>
+                        <Button text="✔ Add Room" styleClass="btn-primary" onAction="#addRoom"/>
+                    </HBox>
+
+                </VBox>
+            </HBox>
+        </VBox>
+    </ScrollPane>
+
+</VBox>

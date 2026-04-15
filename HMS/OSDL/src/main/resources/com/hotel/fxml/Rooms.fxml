@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hotel.controller.RoomsController"
+      styleClass="root-pane" spacing="0">
+
+    <!-- Header -->
+    <HBox styleClass="header" alignment="CENTER_LEFT" spacing="16">
+        <padding><Insets top="16" right="32" bottom="16" left="32"/></padding>
+        <Label text="🛏️" style="-fx-font-size:26px;"/>
+        <Label text="Room Management" styleClass="header-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="➕ Add Room" styleClass="btn-primary" onAction="#goToAddRoom"/>
+        <Button text="📅 New Booking" styleClass="btn-accent" onAction="#goToBooking"/>
+    </HBox>
+
+    <!-- Filters -->
+    <HBox styleClass="filter-bar" spacing="16" alignment="CENTER_LEFT">
+        <padding><Insets top="14" right="32" bottom="14" left="32"/></padding>
+        <Label text="Filter by Type:" styleClass="filter-label"/>
+        <ComboBox fx:id="filterType" styleClass="combo-styled" prefWidth="150"/>
+        <Label text="Status:" styleClass="filter-label"/>
+        <ComboBox fx:id="filterStatus" styleClass="combo-styled" prefWidth="130"/>
+        <Button text="Apply Filter" styleClass="btn-primary" onAction="#applyFilter"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="lblCount" styleClass="count-label"/>
+    </HBox>
+
+    <!-- Table -->
+    <TableView fx:id="roomsTable" VBox.vgrow="ALWAYS" styleClass="table-styled">
+        <padding><Insets top="0" right="24" bottom="24" left="24"/></padding>
+        <columns>
+            <TableColumn fx:id="colRoomNo"   text="Room No."   prefWidth="90"/>
+            <TableColumn fx:id="colType"     text="Type"       prefWidth="120"/>
+            <TableColumn fx:id="colFloor"    text="Floor"      prefWidth="80"/>
+            <TableColumn fx:id="colBed"      text="Bed Type"   prefWidth="100"/>
+            <TableColumn fx:id="colCapacity" text="Capacity"   prefWidth="90"/>
+            <TableColumn fx:id="colPrice"    text="Price/Night" prefWidth="120"/>
+            <TableColumn fx:id="colStatus"   text="Status"     prefWidth="110"/>
+            <TableColumn fx:id="colAmenities" text="Amenities" prefWidth="300"/>
+        </columns>
+        <placeholder>
+            <Label text="No rooms match the selected filters." styleClass="placeholder-text"/>
+        </placeholder>
+    </TableView>
+</VBox>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hotel.controller.DashboardController"
+      styleClass="root-pane" spacing="0">
+
+    <!-- ===== PAGE HEADER ===== -->
+    <HBox alignment="CENTER_LEFT" spacing="16" styleClass="header">
+        <padding><Insets bottom="18" left="28" right="28" top="18"/></padding>
+        <Label style="-fx-font-size:28px;" text="🏨"/>
+        <VBox spacing="1">
+            <Label styleClass="header-title" text="Grand Azure Hotel"/>
+            <Label styleClass="header-subtitle" text="Management Dashboard"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <VBox alignment="CENTER_RIGHT" spacing="2">
+            <Label fx:id="lblCurrentDate" styleClass="header-subtitle" text="—"/>
+            <Label fx:id="lblCurrentTime" style="-fx-text-fill:#eaf0fb; -fx-font-size:15px; -fx-font-weight:bold;" text="—"/>
+        </VBox>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="form-scroll">
+        <VBox spacing="0">
+
+            <!-- ===== STAT CARDS ROW ===== -->
+            <HBox alignment="CENTER" spacing="14" styleClass="stats-row">
+                <padding><Insets bottom="20" left="28" right="28" top="20"/></padding>
+
+                <VBox alignment="CENTER" spacing="5" styleClass="stat-card stat-blue" HBox.hgrow="ALWAYS">
+                    <padding><Insets bottom="18" left="14" right="14" top="18"/></padding>
+                    <Label style="-fx-font-size:26px;" text="🛏️"/>
+                    <Label fx:id="lblTotalRooms" styleClass="stat-number" text="0"/>
+                    <Label styleClass="stat-label" text="Total Rooms"/>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="5" styleClass="stat-card stat-green" HBox.hgrow="ALWAYS">
+                    <padding><Insets bottom="18" left="14" right="14" top="18"/></padding>
+                    <Label style="-fx-font-size:26px;" text="✅"/>
+                    <Label fx:id="lblAvailableRooms" styleClass="stat-number" text="0"/>
+                    <Label styleClass="stat-label" text="Available"/>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="5" styleClass="stat-card stat-red" HBox.hgrow="ALWAYS">
+                    <padding><Insets bottom="18" left="14" right="14" top="18"/></padding>
+                    <Label style="-fx-font-size:26px;" text="🔴"/>
+                    <Label fx:id="lblBookedRooms" styleClass="stat-number" text="0"/>
+                    <Label styleClass="stat-label" text="Occupied"/>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="5" styleClass="stat-card stat-purple" HBox.hgrow="ALWAYS">
+                    <padding><Insets bottom="18" left="14" right="14" top="18"/></padding>
+                    <Label style="-fx-font-size:26px;" text="👥"/>
+                    <Label fx:id="lblTotalCustomers" styleClass="stat-number" text="0"/>
+                    <Label styleClass="stat-label" text="Customers"/>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="5" styleClass="stat-card stat-orange" HBox.hgrow="ALWAYS">
+                    <padding><Insets bottom="18" left="14" right="14" top="18"/></padding>
+                    <Label style="-fx-font-size:26px;" text="📋"/>
+                    <Label fx:id="lblActiveBookings" styleClass="stat-number" text="0"/>
+                    <Label styleClass="stat-label" text="Active Bookings"/>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="5" styleClass="stat-card stat-teal" HBox.hgrow="ALWAYS">
+                    <padding><Insets bottom="18" left="14" right="14" top="18"/></padding>
+                    <Label style="-fx-font-size:26px;" text="💰"/>
+                    <Label fx:id="lblTotalRevenue" styleClass="stat-number" text="₹0"/>
+                    <Label styleClass="stat-label" text="Total Revenue"/>
+                </VBox>
+            </HBox>
+
+            <!-- ===== ANALYTICS + PROMO ROW ===== -->
+            <HBox spacing="16">
+                <padding><Insets bottom="0" left="28" right="28" top="8"/></padding>
+
+                <!-- Occupancy analytics card -->
+                <VBox spacing="12" styleClass="analytics-card" HBox.hgrow="ALWAYS">
+                    <padding><Insets bottom="20" left="20" right="20" top="18"/></padding>
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="📊" style="-fx-font-size:18px;"/>
+                        <Label text="Occupancy Analytics" styleClass="section-title"/>
+                    </HBox>
+
+                    <VBox spacing="6">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="Occupancy Rate" styleClass="detail-key"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label fx:id="lblOccupancyRate" text="0%" styleClass="stat-label"
+                                   style="-fx-text-fill:#c9a84c; -fx-font-size:14px; -fx-font-weight:bold;"/>
+                        </HBox>
+                        <ProgressBar fx:id="pbOccupancy" progress="0" maxWidth="Infinity" styleClass="progress-bar-inline"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label fx:id="lblAnalyticsRooms" text="Rooms: 0 occupied / 0 total"
+                                   styleClass="tip-text"/>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                            <Label fx:id="lblAnalyticsRevenue" text="Revenue this session: ₹0"
+                                   styleClass="tip-text"/>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                            <Label fx:id="lblAnalyticsAvgStay" text="Avg booking: ₹0"
+                                   styleClass="tip-text"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Active promo codes -->
+                <VBox spacing="10" styleClass="analytics-card" HBox.hgrow="ALWAYS">
+                    <padding><Insets bottom="20" left="20" right="20" top="18"/></padding>
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="🎟️" style="-fx-font-size:18px;"/>
+                        <Label text="Active Promo Codes" styleClass="section-title"/>
+                    </HBox>
+                    <HBox spacing="8" wrap="true">
+                        <Label text="APRIL10" styleClass="promo-tag"/>
+                        <Label text="SUMMER20" styleClass="promo-tag"/>
+                        <Label text="HOTEL15" styleClass="promo-tag"/>
+                        <Label text="VIP25" styleClass="promo-tag"/>
+                        <Label text="WELCOME5" styleClass="promo-tag"/>
+                    </HBox>
+                    <VBox spacing="4">
+                        <Label text="APRIL10 → 10% off  |  SUMMER20 → 20% off" styleClass="tip-text"/>
+                        <Label text="HOTEL15 → 15% off  |  VIP25 → 25% off" styleClass="tip-text"/>
+                        <Label text="WELCOME5 → 5% off  |  🎂 Birthday → 10% off" styleClass="tip-text"/>
+                    </VBox>
+                    <Label text="Use these codes in the Booking screen." styleClass="section-subtitle"/>
+                </VBox>
+            </HBox>
+
+            <!-- ===== QUICK NAV GRID ===== -->
+            <Label styleClass="section-title" text="Quick Navigation">
+                <padding><Insets bottom="8" left="28" right="28" top="20"/></padding>
+            </Label>
+
+            <GridPane hgap="14" vgap="14">
+                <padding><Insets bottom="28" left="28" right="28" top="0"/></padding>
+
+                <!-- Rooms -->
+                <VBox alignment="CENTER" spacing="10" styleClass="nav-card" onMouseClicked="#goToRooms" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <padding><Insets bottom="28" left="20" right="20" top="28"/></padding>
+                    <Label style="-fx-font-size:38px;" text="🛏️"/>
+                    <Label styleClass="nav-card-title" text="Room Management"/>
+                    <Label styleClass="nav-card-desc" text="View, filter and manage all hotel rooms" textAlignment="CENTER" wrapText="true"/>
+                </VBox>
+
+                <!-- Customers -->
+                <VBox alignment="CENTER" spacing="10" styleClass="nav-card" onMouseClicked="#goToCustomers" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <padding><Insets bottom="28" left="20" right="20" top="28"/></padding>
+                    <Label style="-fx-font-size:38px;" text="👤"/>
+                    <Label styleClass="nav-card-title" text="Customer Management"/>
+                    <Label styleClass="nav-card-desc" text="Register and manage hotel guests" textAlignment="CENTER" wrapText="true"/>
+                </VBox>
+
+                <!-- Booking -->
+                <VBox alignment="CENTER" spacing="10"
+                      styleClass="nav-card nav-card-accent"
+                      onMouseClicked="#goToBooking"
+                      GridPane.columnIndex="2" GridPane.rowIndex="0">
+                    <padding><Insets bottom="28" left="20" right="20" top="28"/></padding>
+                    <Label style="-fx-font-size:38px;" text="📅"/>
+                    <Label styleClass="nav-card-title" text="New Booking"/>
+                    <Label styleClass="nav-card-desc" text="Book rooms with promo codes and offers" textAlignment="CENTER" wrapText="true"/>
+                </VBox>
+
+                <!-- Checkout -->
+                <VBox alignment="CENTER" spacing="10" styleClass="nav-card" onMouseClicked="#goToCheckout" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <padding><Insets bottom="28" left="20" right="20" top="28"/></padding>
+                    <Label style="-fx-font-size:38px;" text="🚪"/>
+                    <Label styleClass="nav-card-title" text="Checkout"/>
+                    <Label styleClass="nav-card-desc" text="Process guest checkouts and cancellations" textAlignment="CENTER" wrapText="true"/>
+                </VBox>
+
+                <!-- Billing -->
+                <VBox alignment="CENTER" spacing="10" styleClass="nav-card" onMouseClicked="#goToBilling" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <padding><Insets bottom="28" left="20" right="20" top="28"/></padding>
+                    <Label style="-fx-font-size:38px;" text="💰"/>
+                    <Label styleClass="nav-card-title" text="Billing &amp; Invoices"/>
+                    <Label styleClass="nav-card-desc" text="View billing history and generate invoices" textAlignment="CENTER" wrapText="true"/>
+                </VBox>
+
+                <!-- Recent activity -->
+                <VBox alignment="CENTER_LEFT" spacing="8" styleClass="nav-card info-card" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <padding><Insets bottom="20" left="18" right="18" top="20"/></padding>
+                    <Label styleClass="nav-card-title" text="⚡ Quick Stats"/>
+                    <Label fx:id="lblQuickStat1" text="Loading..." styleClass="tip-text"/>
+                    <Label fx:id="lblQuickStat2" text="Loading..." styleClass="tip-text"/>
+                    <Label fx:id="lblQuickStat3" text="Loading..." styleClass="tip-text"/>
+                </VBox>
+
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS" percentWidth="33.3"/>
+                    <ColumnConstraints hgrow="ALWAYS" percentWidth="33.3"/>
+                    <ColumnConstraints hgrow="ALWAYS" percentWidth="33.3"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="140" vgrow="ALWAYS"/>
+                    <RowConstraints minHeight="140" vgrow="ALWAYS"/>
+                </rowConstraints>
+            </GridPane>
+
+        </VBox>
+    </ScrollPane>
+</VBox>
